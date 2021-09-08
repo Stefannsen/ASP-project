@@ -1,0 +1,25 @@
+﻿@model Laborator8App.Models.GroupUser
+
+<br />
+
+@using (Html.BeginForm(actionName: "EditUser", controllerName: "Groups"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.Id)
+    <br />
+    @Html.HiddenFor(m => m.ApplicationUsers_Id)
+    <br />
+
+    <label>Selectati rolul</label>
+    @Html.DropDownListFor(m => m.GroupRoleId,
+        new SelectList(Model.Roles, "Value", "Text"),
+        "Selectati rolul", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.GroupRoleId, "", new { @class = "text-danger" })
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Modifica rolul</button>
+}
+
+
+

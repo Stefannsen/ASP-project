@@ -1,0 +1,31 @@
+﻿@model Laborator5App.Models.Group
+
+<h2>Adaugare grup</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Groups"))
+{
+    // @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("Name", "Nume Grup")
+    <br />
+    @Html.TextBox("Name", null, new { @class = "form-control" })
+
+    @Html.ValidationMessage("Name", null, new { @class = "text-danger" })
+    <br /><br />
+
+    @Html.Label("Description", "Descrierea grupului")
+    <br />
+    @Html.TextArea("Description", null, new { @class = "form-control" })
+    @Html.ValidationMessage("Description", null, new { @class = "text-danger" })
+    <br /><br />
+
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+    "Selectati categoria", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+    <br />
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Adauga grup</button>
+
+}
+

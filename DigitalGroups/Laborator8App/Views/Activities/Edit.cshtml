@@ -1,0 +1,37 @@
+﻿@model Laborator5App.Models.Activity
+
+<h1>editare</h1>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Activities"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.HiddenFor(m => m.ActivityId)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.UserId)
+
+    @Html.Label("ActivityName", "Nume activitate")
+    <br />
+    @Html.Editor("ActivityName")
+    @Html.ValidationMessageFor(m => m.ActivityName, "", new { @class = "text-danger" })
+    <br /><br />
+
+    @Html.Label("ActivityDescription", "Descriere activitate")
+    <br />
+    @Html.Editor("ActivityDescription")
+    @Html.ValidationMessageFor(m => m.ActivityDescription, "", new { @class = "text-danger" })
+    <br /><br />
+
+    @Html.Label("Date", "Data Programare")
+    <br />
+
+    @Html.Editor("Date")
+    //@Html.EditorFor(model => model.Date, new { htmlAttributes = new { Value = Model.Date.ToString("dd-MMM-yyyy"), @class = "form-control date-picker" } })
+
+    //@Html.TextBox("Date", "", new { @class = "form-control datepicker", @placeholder = "Introduceti data" })
+
+    <br />
+
+    <button type="submit" class="btn btn-success">Editeaza</button>
+
+}
+

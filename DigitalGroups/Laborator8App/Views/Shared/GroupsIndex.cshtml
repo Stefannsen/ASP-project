@@ -1,0 +1,35 @@
+﻿@if (TempData.ContainsKey("message"))
+{
+    if (ViewBag.message == "Momentan nu administrezi niciun grup!")
+    {
+        <br />
+        <div class="alert alert-info">
+            <strong>Info</strong> @ViewBag.message
+        </div>
+    }
+    else
+    {
+        <br />
+        <div class="alert alert-success">
+            <strong>Success!</strong> @ViewBag.message
+        </div>
+    }
+}
+
+
+<br>
+<br />
+
+
+@foreach (Laborator5App.Models.Group group in ViewBag.Groups)
+{
+    <div class="panel panel-default col-sm-4">
+        @Html.Partial("GroupInfo", group)
+        <div class="panel-footer">
+            <a class="btn btn-success" href="/Groups/Show/@group.Id">Afisare continut grup</a>
+        </div>
+    </div>
+
+}
+
+

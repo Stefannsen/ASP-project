@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Grupuri</h2>
+
+@Html.DropDownList("url", new SelectList(new[]{
+       new SelectListItem { Text = "A to Z", Value ="/Groups/Index/A-Z"},
+       new SelectListItem { Text = "Z to A", Value ="/Groups/Index/Z-A" },
+       new SelectListItem { Text = "OLD to NEW", Value ="/Groups/Index/OLD-NEW" },
+       new SelectListItem { Text = "NEW to OLD", Value = "/Groups/Index/NEW-OLD" },}, "Value", "Text"),
+       "Sorteaza", new { @onchange = "location=this.value", @class = "form-control" })
+
+
+@Html.Partial("GroupsIndex")

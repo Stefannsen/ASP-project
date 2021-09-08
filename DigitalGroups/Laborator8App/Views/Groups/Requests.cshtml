@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Requests";
+}
+
+<h2>Cereri</h2>
+
+@foreach (Laborator8App.Models.ApplicationUser user in ViewBag.Users)
+{
+<div class="panel">
+    <i class="glyphicon glyphicon-user"></i>
+    <strong style="left:0">@user.UserName</strong>
+    <br /><br />
+    <div class="panel-footer">
+        @using (Html.BeginForm(actionName: "AddUser", controllerName: "Groups", routeValues: new { id = @ViewBag.id, param = user.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Put)
+            <button class="btn btn-success pull-left" style="margin-right: 3% " type="submit">Aproba</button>
+        }
+
+        @using (Html.BeginForm(actionName: "IgnoreRequest", controllerName: "Groups", method: FormMethod.Post, routeValues: new { id = @ViewBag.id, param = user.Id }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-danger pull-left" type="submit">Ignora</button>
+        }
+        <div class="clearfix"></div>
+    </div>
+
+    </div>
+
+    }

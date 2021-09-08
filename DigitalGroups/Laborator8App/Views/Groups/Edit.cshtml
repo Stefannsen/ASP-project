@@ -1,0 +1,35 @@
+﻿@model Laborator5App.Models.Group
+
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Groups"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.Id)
+    <br />
+    @Html.Label("Name", "Nume grup")
+    <br />
+    @Html.Editor("Name")
+    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    <br /><br />
+
+    @Html.Label("Description", "Descrierea grupului")
+    <br />
+    @Html.EditorFor(m => m.Description)
+    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    <br /><br />
+
+    @Html.HiddenFor(m => m.Date)
+    <br />
+
+    <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId,
+        new SelectList(Model.Categ, "Value", "Text"),
+        "Selectati categoria", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Modifica setarile grupului</button>
+}
+
+

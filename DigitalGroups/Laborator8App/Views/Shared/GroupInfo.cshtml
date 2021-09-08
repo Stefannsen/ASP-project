@@ -1,0 +1,16 @@
+﻿
+<div class="panel-heading font-weight-bold"><strong>@Model.Name</strong></div>
+<div class="panel-body text-info">
+
+
+    <i class="glyphicon glyphicon-globe"></i> @Model.Category.CategoryName
+    <br />
+    Descriere: @Model.Description
+    <br />
+    <i class="glyphicon glyphicon-user"></i>
+    <i>Creat de <strong>@Model.User.UserName </strong></i>
+    <br />
+    <span class="label label-success"> Creat pe data de: @Model.Date.ToShortDateString()</span>
+
+    
+</div>

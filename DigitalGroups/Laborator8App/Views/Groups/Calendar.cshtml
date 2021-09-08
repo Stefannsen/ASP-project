@@ -1,0 +1,92 @@
+﻿@model Laborator5App.Models.Group
+
+
+@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Calendar</h2>
+
+<br />
+@foreach (var a in Model.Activities)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div>
+
+
+                    <h3>@a.ActivityName</h3>
+                    <small class="pull-left">@a.Date.ToShortDateString()</small>
+                    <br /><br />
+                    <p>@a.ActivityDescription</p>
+                    <br />
+                    <i class="glyphicon glyphicon-user"></i> <i>Adaugata de </i> <strong> @a.User.UserName </strong>
+                    <br /><br />
+                </div>
+                @if (a.UserId == ViewBag.userId || User.IsInRole("Admin") || User.IsInRole("Editor"))
+                {
+                    <div style="display: inline-block; float : left; margin-right: 15px">
+                        <a class="glyphicon glyphicon-pencil" href="/Activities/Edit/@a.ActivityId"></a>
+                    </div>
+                }
+                @if (a.UserId == ViewBag.userId || User.IsInRole("Admin") || User.IsInRole("Editor"))
+                {
+                    <div style="display: inline-block; float : left">
+                        <form method="post" action="/Activities/Delete/@a.ActivityId">
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                        </form>
+                    </div>
+                }
+                </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <hr />
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="panel">
+                @using (Html.BeginForm(actionName: "New", controllerName: "Activities"))
+                {
+                    <input type="hidden" name="Id" value=@Model.Id />
+                    @Html.Label("ActivityName", "Nume activitate")
+                    <br />
+                    @Html.TextBox("ActivityName", null, new { @class = "form-control" })
+                    <br /><br />
+
+                    @Html.Label("ActivityDescription", "Descriere activitate")
+                    <br />
+                    @Html.TextBox("ActivityDescription", null, new { @class = "form-control" })
+                    <br /><br />
+
+                    @Html.Label("Date", "Data Programare")
+                    <br />
+
+                    @Html.TextBox("Date", "", new { @class = "form-control datepicker", @placeholder = "Introduceti data" })
+
+                    <br /><br />
+                    <button type="submit" class="btn btn-success">Adaugare activitate</button>
+
+                }
+                <br />
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

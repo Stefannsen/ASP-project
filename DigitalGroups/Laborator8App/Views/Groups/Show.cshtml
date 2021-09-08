@@ -1,0 +1,112 @@
+﻿@model Laborator5App.Models.Group
+@{
+    ViewBag.Title = "Show";
+}
+<br />
+@if (TempData.ContainsKey("message"))
+{
+    <br />
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.message
+    </div>
+}
+
+
+<div class="panel panel-default">
+    @Html.Partial("GroupInfo", Model)
+
+
+    <div class="panel-footer">
+
+        @if (ViewBag.afisareButoane == true)
+        {
+            if ((ViewBag.groupRole == "1" || ViewBag.groupRole == "2") || User.IsInRole("Editor") || User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success pull-left" href="/Groups/Edit/@Model.Id" style="margin-right: 3% ">Modifica setarile grupului</a>
+
+            }
+
+            <a class="btn btn-success pull-left" href="/Groups/Calendar/@Model.Id">Calendar</a>
+
+            if (ViewBag.groupRole == "1" || User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success pull-left" href="/Groups/Requests/@Model.Id" style="margin-left: 3% ">Cereri</a>
+                using (Html.BeginForm(actionName: "Delete", controllerName: "Groups", method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger pull-right" type="submit" style="margin-left: 3% ">Sterge grupul</button>
+                }
+            }
+
+            if (!ViewBag.ok)
+            {
+                using (Html.BeginForm(actionName: "Leave", controllerName: "Groups", method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger pull-right" type="submit">Leave</button>
+                }
+            }
+
+        }
+
+
+        @if (ViewBag.afisareButoane == false)
+        {
+            if (ViewBag.groupRole == "4")
+            {
+                using (Html.BeginForm(actionName: "IgnoreRequest", controllerName: "Groups", method: FormMethod.Post, routeValues: new { id = @Model.Id, param = @ViewBag.idUser }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger pull-right" type="submit" style="margin-left: 3% ">Renunta</button>
+                }
+            }
+            else
+            {
+                <form method="post" action="/Groups/Request/@Model.Id">
+                    <button class="btn btn-success pull-left" type="submit" style="margin-left: 3% ">Join</button>
+                </form>
+            }
+        }
+
+        <div class="clearfix"></div>
+    </div>
+    
+
+</div>
+
+
+
+<h1 tyle="left:0">Lista participanti</h1>
+<br />
+
+@foreach (var comm in ViewBag.Users)
+{
+<div class="panel " styke="border-color:white">
+    <i class="glyphicon glyphicon-user"></i>
+        <strong style="left:0">@comm.UserName</strong><p> @comm.RoleName </p>
+
+        @if (ViewBag.groupRole == "1" || User.IsInRole("Admin"))
+        {
+            <div class="panel-footer" styke="border-color:white">
+
+                @if (comm.UserId != Model.UserId || User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-success pull-left" href="/Groups/EditUser/@Model.Id/@comm.UserId">Modifica rolul</a>
+                }
+
+                @using (Html.BeginForm(actionName: "Remove", controllerName: "Groups", method: FormMethod.Post, routeValues: new { id = @Model.Id, param = @comm.UserId }))
+                {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger pull-left" type="submit" style="margin-left: 3% ">Remove user</button>
+                }
+
+
+                <div class="clearfix"></div>
+            </div>
+        }
+        <br />
+</div>
+    }
+
+
+
